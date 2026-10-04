@@ -1,8 +1,7 @@
 'use client';
 import { jsx as _jsx } from "react/jsx-runtime";
-import { useRouter } from 'next/navigation.js';
+import { useAuth, useDocumentInfo, useRouter } from '@payloadcms/ui';
 import { useCallback } from 'react';
-import { useAuth, useDocumentInfo } from '@payloadcms/ui';
 import { TwoFactorManagementClient } from '../TwoFactorManagementClient.js';
 /**
  * Wrapper around TwoFactorManagementClient for use as a Payload `ui` field.

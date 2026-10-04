@@ -1,8 +1,7 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
-import { useRouter } from 'next/navigation.js';
-import { useConfig } from '@payloadcms/ui';
+import { useConfig, useRouter } from '@payloadcms/ui';
 import { useAuthMountPath } from '../useAuthMountPath.js';
 /**
  * Two-factor authentication verification component.

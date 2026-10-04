@@ -1,8 +1,7 @@
 'use client';
 import { jsx as _jsx } from "react/jsx-runtime";
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation.js';
-import { useConfig } from '@payloadcms/ui';
+import { useConfig, useRouter } from '@payloadcms/ui';
 /**
  * BeforeLogin component that redirects to the custom login page.
  * Injected into Payload's beforeLogin slot to intercept default login.

@@ -1,12 +1,11 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
 import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/navigation.js';
+import { useConfig, useRouter } from '@payloadcms/ui';
 import { createAuthClient } from 'better-auth/react';
 import { twoFactorClient, magicLinkClient, emailOTPClient } from 'better-auth/client/plugins';
 import { hasAnyRole, hasAllRoles } from '../utils/access.js';
 import { resolveAvailability, pickPrimaryMethod, resolveTwoFactorOffer, DEFAULT_OTP_LENGTHS } from '../utils/loginMethods.js';
-import { useConfig } from '@payloadcms/ui';
 import { useAuthClientBaseURL } from './useAuthMountPath.js';
 import { LoadingScreen } from './login/LoadingScreen.js';
 import { AccessDeniedScreen } from './login/AccessDeniedScreen.js';

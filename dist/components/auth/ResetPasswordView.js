@@ -1,8 +1,7 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation.js';
-import { useConfig } from '@payloadcms/ui';
+import { useConfig, useRouter, useSearchParams } from '@payloadcms/ui';
 import { useAuthMountPath } from '../useAuthMountPath.js';
 /**
  * Reset password page component for setting a new password.
