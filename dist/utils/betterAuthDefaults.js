@@ -1,0 +1,64 @@
+/**
+ * Utility to apply sensible defaults to Better Auth options.
+ *
+ * @packageDocumentation
+ */ /**
+ * Applies sensible defaults to Better Auth options.
+ *
+ * Currently applies the following defaults:
+ * - `trustedOrigins`: If not explicitly provided but `baseURL` is set,
+ *   defaults to `[baseURL]`. This handles the common single-domain case
+ *   where the app's origin should be trusted for auth requests.
+ *
+ * Multi-domain setups can still explicitly set `trustedOrigins` to include
+ * multiple origins.
+ *
+ * @example Simple case - trustedOrigins defaults to [baseURL]
+ * ```ts
+ * import { withBetterAuthDefaults } from '@delmaredigital/payload-better-auth'
+ *
+ * const auth = betterAuth(withBetterAuthDefaults({
+ *   baseURL: 'https://myapp.com',
+ *   // trustedOrigins automatically becomes ['https://myapp.com']
+ * }))
+ * ```
+ *
+ * @example Multi-domain case - explicit trustedOrigins respected
+ * ```ts
+ * const auth = betterAuth(withBetterAuthDefaults({
+ *   baseURL: 'https://myapp.com',
+ *   trustedOrigins: ['https://myapp.com', 'https://other-domain.com'],
+ *   // trustedOrigins stays as explicitly provided
+ * }))
+ * ```
+ *
+ * @example With createBetterAuthPlugin
+ * ```ts
+ * createBetterAuthPlugin({
+ *   createAuth: (payload) => betterAuth(withBetterAuthDefaults({
+ *     database: payloadAdapter({ payloadClient: payload }),
+ *     baseURL: process.env.BETTER_AUTH_URL,
+ *   })),
+ * })
+ * ```
+ */ export function withBetterAuthDefaults(options) {
+    // If trustedOrigins is explicitly provided, use it as-is
+    if (options.trustedOrigins !== undefined) {
+        return options;
+    }
+    // If baseURL is set, default trustedOrigins to [baseURL]
+    // In Better Auth 1.5, baseURL can be a string or an object with { fallback, allowedHosts, protocol }
+    if (options.baseURL) {
+        const origin = typeof options.baseURL === 'string' ? options.baseURL : options.baseURL.fallback;
+        if (origin) {
+            return {
+                ...options,
+                trustedOrigins: [
+                    origin
+                ]
+            };
+        }
+    }
+    // No defaults to apply
+    return options;
+}

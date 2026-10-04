@@ -1,0 +1,16 @@
+/**
+ * Admin Components for Better Auth
+ *
+ * These components are auto-injected when disableLocalStrategy is detected.
+ * They can also be used standalone or customized.
+ */ export { LogoutButton } from '../components/LogoutButton.js';
+export { useAuthMountPath, useAuthClientBaseURL, DEFAULT_AUTH_BASE_PATH } from '../components/useAuthMountPath.js';
+export { BeforeLogin } from '../components/BeforeLogin.js';
+export { LoginView } from '../components/LoginView.js';
+export { ForgotPasswordView } from '../components/auth/ForgotPasswordView.js';
+export { ResetPasswordView } from '../components/auth/ResetPasswordView.js';
+export { TwoFactorSetupView } from '../components/twoFactor/TwoFactorSetupView.js';
+export { TwoFactorVerifyView } from '../components/twoFactor/TwoFactorVerifyView.js';
+// Management UI field wrappers (for Payload ui fields)
+export { TwoFactorField } from '../components/management/fields/TwoFactorField.js'; // Passkey components moved to '@delmaredigital/payload-better-auth/components/passkey'
+ // API key components moved to '@delmaredigital/payload-better-auth/components/api-key'
