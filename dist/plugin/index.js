@@ -53,6 +53,7 @@ let apiKeyPermissionsConfig = undefined;
             try {
                 const memberships = await payload.find({
                     collection: membersCollection,
+                    overrideAccess: true,
                     where: {
                         and: [
                             {
@@ -755,6 +756,7 @@ let apiKeyPermissionsConfig = undefined;
                             if (jwtPayload?.sub) {
                                 const users = await payload.find({
                                     collection: usersCollection,
+                                    overrideAccess: true,
                                     where: {
                                         id: {
                                             equals: jwtPayload.sub
@@ -773,6 +775,7 @@ let apiKeyPermissionsConfig = undefined;
                                         try {
                                             const memberships = await payload.find({
                                                 collection: membersCollection,
+                                                overrideAccess: true,
                                                 where: {
                                                     and: [
                                                         {
@@ -830,6 +833,7 @@ let apiKeyPermissionsConfig = undefined;
                 }
                 const users = await payload.find({
                     collection: usersCollection,
+                    overrideAccess: true,
                     where: {
                         id: {
                             equals: sessionData.user.id
@@ -866,6 +870,7 @@ let apiKeyPermissionsConfig = undefined;
                     try {
                         const memberships = await payload.find({
                             collection: membersCollection,
+                            overrideAccess: true,
                             where: {
                                 and: [
                                     {
@@ -931,6 +936,7 @@ let apiKeyPermissionsConfig = undefined;
                         // finds no row.
                         const apiKeyRows = await payload.find({
                             collection: apiKeysCollection,
+                            overrideAccess: true,
                             where: {
                                 and: [
                                     {
@@ -966,6 +972,7 @@ let apiKeyPermissionsConfig = undefined;
                                     try {
                                         const memberships = await payload.find({
                                             collection: membersCollection,
+                                            overrideAccess: true,
                                             where: {
                                                 and: [
                                                     {
