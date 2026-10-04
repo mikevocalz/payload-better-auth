@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Breaking
+
+- **Payload 4.** Peer ranges for `payload`, `@payloadcms/next` and `@payloadcms/ui` move from `>=3.69.0 <4` to `>=4.0.0-canary.37 <5`. The admin components use props and an import path that exist only in Payload 4, so one release cannot serve both majors. Payload 3 users stay on 0.13.x.
+- **Node >=24.15.0**, the floor Payload 4 declares in `engines`.
+
+### Changed
+
+- `DefaultTemplate` is imported from `@payloadcms/ui/rsc`. Payload 4 removed `@payloadcms/next/templates`, so the API-keys, passkeys and two-factor management views failed to resolve at runtime.
+- `@payloadcms/ui` v4 prop renames in `PasskeysManagementClient` and `TwoFactorManagementClient`: `Button` `size="small"` → `"medium"` (v4 offers `medium | large`), `buttonStyle="error"` → `"destructive"`; `Banner` `type="error"` → `"danger"`, `type="info"` → `"default"`.
+- `canUpdateOwnFields` reads the configured id field with `Reflect.get`. Payload 4 types `req.user` as `AuthenticatedUser`, which has no string index signature.
+
 ## [0.13.1] - 2026-09-30
 
 ### Fixed
