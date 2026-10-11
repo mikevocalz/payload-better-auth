@@ -466,9 +466,27 @@ function extractRelationTarget(
   return usePlural ? pluralize(base) : base
 }
 
+/**
+ * Resolve a Better Auth schema reference to the actual generated Payload
+ * collection slug. Better Auth references semantic model keys such as "user"
+ * even when that model is renamed with `user.modelName`. Looking only at the
+ * raw reference would incorrectly point account/session relationships at
+ * `users` instead of e.g. `members`.
+ */
+function resolveRelationTarget(
+  referencedModel: string,
+  tables: ReturnType<typeof getAuthTables> | undefined,
+  usePlural: boolean
+): string {
+  const referencedTable = tables?.[referencedModel]
+  const baseName = referencedTable?.modelName ?? referencedModel
+  return usePlural ? pluralize(baseName) : baseName
+}
+
 function generateCollection(
   modelKey: string,
   table: ReturnType<typeof getAuthTables>[string],
+  tables: ReturnType<typeof getAuthTables>,
   usePlural: boolean,
   adminGroup: string,
   customAccess?: BetterAuthCollectionsOptions['access'],
@@ -497,7 +515,7 @@ function generateCollection(
       // Use schema reference if available, otherwise infer from field name
       let relationTo: string
       if (fieldDef.references?.model) {
-        relationTo = usePlural ? pluralize(fieldDef.references.model) : fieldDef.references.model
+        relationTo = resolveRelationTarget(fieldDef.references.model, tables, usePlural)
       } else {
         relationTo = extractRelationTarget(fieldKey, usePlural)
       }
@@ -675,7 +693,8 @@ export function augmentCollectionWithMissingFields(
   usePlural: boolean,
   modelKey: string,
   configureSaveToJWT = true,
-  secretFields?: string[]
+  secretFields?: string[],
+  tables?: ReturnType<typeof getAuthTables>
 ): CollectionConfig {
   const existingFieldNames = getExistingFieldNames(collection.fields)
   const missingFields: Field[] = []
@@ -710,7 +729,7 @@ export function augmentCollectionWithMissingFields(
     if (fieldType === 'relationship') {
       let relationTo: string
       if (fieldDef.references?.model) {
-        relationTo = usePlural ? pluralize(fieldDef.references.model) : fieldDef.references.model
+        relationTo = resolveRelationTarget(fieldDef.references.model, tables, usePlural)
       } else {
         relationTo = extractRelationTarget(fieldKey, usePlural)
       }
@@ -896,7 +915,8 @@ export function betterAuthCollections(
           usePlural,
           modelKey,
           configureSaveToJWT,
-          secretFieldsByModel?.[modelKey]
+          secretFieldsByModel?.[modelKey],
+          tables
         )
 
         // Inject first-user-admin hook for user collection
@@ -919,6 +939,7 @@ export function betterAuthCollections(
       let collection = generateCollection(
         modelKey,
         table,
+        tables,
         usePlural,
         adminGroup,
         access,
