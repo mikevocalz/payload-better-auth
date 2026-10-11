@@ -88,7 +88,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "pnpm build:swc && pnpm build:types",
+    "build": "npm run build:swc && npm run build:types",
     "build:swc": "swc ./src -d ./dist --strip-leading-paths",
     "build:types": "tsc --emitDeclarationOnly",
     "dev": "swc ./src -d ./dist --strip-leading-paths --watch",
@@ -99,7 +99,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "prepare": "npm run build"
   },
   "peerDependencies": {
     "@better-auth/api-key": ">=1.7.0 <2",
